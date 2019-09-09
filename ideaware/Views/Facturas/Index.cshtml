@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Listado Facturas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-app="api.facturas">
+    <div ng-controller="listado as vm">
+        <h2>Listado Facturas</h2>
+        <a href="/facturas/crear" class="btn btn-primary">Crear factura</a>
+        <br />
+        <br />
+        <table class="table table-bordered table-stripped">
+            <tr>
+                <th class="text-center">Numero factura</th>
+                <th class="text-center">Nombre cliente</th>
+                <th class="text-center">Exportar</th>
+            </tr>
+            <tr dir-paginate="factura in vm.facturas | itemsPerPage: 10">
+                <td class="text-center">{{factura.id}}</td>
+                <td class="text-center">{{factura.nombre}}</td>
+                <td class="text-center">
+                    <a href="/facturas/exportar/{{factura.id}}"><span class="glyphicon glyphicon-file"></span></a>
+                </td>
+            </tr>
+        </table>
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/facturas/controller.js"></script>
+    <script src="~/Scripts/facturas/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>    
+}
+

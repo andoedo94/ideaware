@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Listado Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-app="api.productos">
+    <div ng-controller="listado as vm">
+        <h2>Listado Productos</h2>
+        <a href="/productos/crear" class="btn btn-primary">Crear producto</a>
+        <br />
+        <br />
+        <table class="table table-bordered table-stripped">
+            <tr>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Editar</th>
+                <th class="text-center">Eliminar</th>
+            </tr>
+            <tr dir-paginate="producto in vm.productos | itemsPerPage: 10">
+                <td class="text-center">{{producto.nombre}}</td>
+                <td class="text-center">{{producto.valor}}</td>
+                <td class="text-center">
+                    <a href="/productos/crear/{{producto.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="vm.delete(producto.id)"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        </table>
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/productos/controller.js"></script>
+    <script src="~/Scripts/productos/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>
+}
+

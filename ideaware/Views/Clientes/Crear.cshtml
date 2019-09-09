@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Crear cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear cliente</h2>
+
+<div ng-app="api.clientes">
+    <div ng-controller="crear as clientevm">
+        @if (ViewBag.id != null)
+        {
+            <input type="hidden" ng-model="clientevm.id" ng-init="id=@ViewBag.id" />   
+        }
+        <form name="clientevm.clienteform" ng-submit="clientevm.guardar()" novalidate>
+            <div class="col-md-12" ng-show="clientevm.errores != null">
+                <div class="alert alert-danger">
+                    <span ng-repeat="error in clientevm.errores">{{error.ErrorMessage}}</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Nombres</label>
+                    <input type="text" class="form-control" name="nombre" ng-model="clientevm.cliente.nombre" placeholder="Nombre" ng-required="true" />
+                    <span class="text-danger" ng-show="(clientevm.clienteform.$submitted || clientevm.clienteform.nombre.$touched) && clientevm.clienteform.nombre.$error.required">El nombre es requerido.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Apellidos</label>
+                    <input type="text" class="form-control" name="apellido" ng-model="clientevm.cliente.apellido" placeholder="Apellido" ng-required="true" />
+                    <span class="text-danger" ng-show="(clientevm.clienteform.$submitted || clientevm.clienteform.apellido.$touched) && clientevm.clienteform.apellido.$error.required">El apellido es requerido.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Identificación</label>
+                    <input type="number" class="form-control" name="identificacion" ng-model="clientevm.cliente.identificacion" placeholder="Identificación" ng-required="true" />
+                    <span class="text-danger" ng-show="(clientevm.clienteform.$submitted || clientevm.clienteform.identificacion.$touched) && clientevm.clienteform.identificacion.$error.required">La Identificación es requerido.</span>
+                    <span class="text-danger" ng-show="(clientevm.clienteform.$submitted || clientevm.clienteform.identificacion.$touched) && clientevm.clienteform.identificacion.$error.number">La Identificación debe ser un numero.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-primary">Guardar</button>
+                <br />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/clientes/controller.js"></script>
+    <script src="~/Scripts/clientes/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>
+}
+

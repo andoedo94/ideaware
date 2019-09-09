@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/sweetalert.min.css" rel="stylesheet" />
+    <link href="~/Content/select.min.css" rel="stylesheet" />    
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <style>
+        .carga {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.57) url(http://siturmagdalena.com/Content/Cargando.gif) 50% 50% no-repeat
+        }
+
+        body.charging {
+            overflow: hidden;
+        }
+
+            body.charging .carga {
+                display: block;
+            }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (Request.IsAuthenticated)
+                {
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Clientes", "Index", "clientes")</li>
+                    <li>@Html.ActionLink("Empleados", "Index", "empleados")</li>
+                    <li>@Html.ActionLink("Facturas", "Index", "facturas")</li>
+                    <li>@Html.ActionLink("Facturas", "Index", "productos")</li>
+                </ul>
+                }
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Prueba Ideaware</p>
+        </footer>
+    </div>
+
+    <div class="carga"></div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

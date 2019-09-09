@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Listado de empleados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-app="api.empleados">
+    <div ng-controller="listado as vm">
+        <h2>Listado empleados</h2>
+        <a href="/empleados/crear" class="btn btn-primary">Crear empleado</a>
+        <br />
+        <br />
+        <table class="table table-bordered table-stripped">
+            <tr>
+                <th class="text-center">Username</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Apellido</th>
+                <th class="text-center">Roles</th>
+                <th class="text-center">Editar</th>
+                <th class="text-center">Eliminar</th>
+            </tr>
+            <tr dir-paginate="empleado in vm.empleados | itemsPerPage: 10">
+                <td class="text-center">{{empleado.username}}</td>
+                <td class="text-center">{{empleado.nombre}}</td>
+                <td class="text-center">{{empleado.apellidos}}</td>
+                <td class="text-center">{{empleado.roles}}</td>
+                <td class="text-center">
+                    <a href="/empleados/crear/{{empleado.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="vm.delete(empleado.id)"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        </table>
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/empleados/controller.js"></script>
+    <script src="~/Scripts/empleados/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>
+    <script src="~/Scripts/select.min.js"></script>
+}
+
+

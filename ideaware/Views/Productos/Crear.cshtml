@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Crear producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear Producto</h2>
+
+<div ng-app="api.productos">
+    <div ng-controller="crear as productovm">
+        @if (ViewBag.id != null)
+        {
+            <input type="hidden" ng-model="productovm.id" ng-init="id=@ViewBag.id" />
+        }
+        <form name="productovm.productoform" ng-submit="productovm.guardar()" novalidate>
+            <div class="col-md-12" ng-show="productovm.errores != null">
+                <div class="alert alert-danger">
+                    <span ng-repeat="error in productovm.errores">{{error.ErrorMessage}}</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Nombre</label>
+                    <input type="text" class="form-control" name="nombre" ng-model="productovm.producto.nombre" placeholder="Nombre" ng-required="true" />
+                    <span class="text-danger" ng-show="(productovm.productoform.$submitted || productovm.productoform.nombre.$touched) && productovm.productoform.nombre.$error.required">El nombre es requerido.</span>
+                </div>
+            </div>        
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Valor</label>
+                    <input type="number" class="form-control" name="valor" ng-model="productovm.producto.valor" placeholder="Valor" ng-required="true" />
+                    <span class="text-danger" ng-show="(productovm.productoform.$submitted || productovm.productoform.valor.$touched) && productovm.productoform.valor.$error.required">El valor es requerido.</span>
+                    <span class="text-danger" ng-show="(productovm.productoform.$submitted || productovm.productoform.valor.$touched) && productovm.productoform.valor.$error.number">El valor debe ser un numero.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-primary">Guardar</button>
+                <br />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/productos/controller.js"></script>
+    <script src="~/Scripts/productos/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>
+}
+

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Listado Personas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-app="api.clientes">
+    <div ng-controller="listado as vm">
+        <h2>Listado Personas</h2>
+        <a href="/clientes/crear" class="btn btn-primary">Crear cliente</a>
+        <br />
+        <br />
+        <table class="table table-bordered table-stripped">
+            <tr>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Apellido</th>
+                <th class="text-center">Identificacion</th>
+                <th class="text-center">Editar</th>
+                <th class="text-center">Eliminar</th>
+            </tr>
+            <tr dir-paginate="client in vm.clientes | itemsPerPage: 10">
+                <td class="text-center">{{client.nombre}}</td>
+                <td class="text-center">{{client.apellidos}}</td>
+                <td class="text-center">{{client.identificacion}}</td>
+                <td class="text-center">
+                    <a href="/clientes/crear/{{client.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+                <td class="text-center">
+                    <a ng-click="vm.delete(client.id)"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        </table>
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/clientes/controller.js"></script>
+    <script src="~/Scripts/clientes/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>
+}
+

@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Crear factura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear factura</h2>
+<div ng-app="api.facturas">
+    <div ng-controller="crear as facturavm">
+       
+        <form name="facturavm.facturaform" ng-submit="facturavm.guardar()" novalidate>
+
+            <div class="col-md-12 col-xs-12 col-sm-12" ng-show="facturavm.errores != null">
+                <div class="alert alert-danger">
+                    <span ng-repeat="error in facturavm.errores">{{error.ErrorMessage}}</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Cliente</label>
+                    <select name="cliente" class="form-control" ng-model="facturavm.factura.cliente" required="true">
+                        <option value="">--Seleccione--</option>
+                        <option ng-repeat="cliente in facturavm.clientes" value="{{cliente.id}}">{{cliente.identificacion}} - {{cliente.nombre}} </option>
+                    </select>
+                    <span class="text-danger" ng-show="(facturavm.facturaform.$submitted || facturavm.facturaform.cliente.$touched) && facturavm.facturaform.cliente.$error.required">El campo cliente es requerido.</span>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Producto</label>
+                    <select name="producto" class="form-control" ng-model="facturavm.producto.id" ng-change="facturavm.precio()">
+                        <option value="">--Seleccione--</option>
+                        <option ng-repeat="producto in facturavm.productos" value="{{producto.id}}">{{producto.nombre}}</option>
+                    </select>                    
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Cantidad</label>
+                    <input type="number" name="cantidad" ng-model="facturavm.producto.cantidad" class="form-control" ng-change="facturavm.precio()"  />
+                   
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Valor Unitario</label>
+                    <input type="text" class="form-control" ng-model="facturavm.producto.valor" readonly />                    
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <a class="btn btn-primary" ng-click="facturavm.agregar()">Agregar</a>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <br />                
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Valor</th>
+                    </tr>
+
+                    <tr ng-repeat="producto in facturavm.factura.productos ">
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.cantidad}}</td>
+                        <td>{{producto.valor}}</td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre">Valor Total</label>
+                    <input type="text" class="form-control" ng-model="facturavm.total" readonly />
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-primary">Guardar</button>
+                <br />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/facturas/controller.js"></script>
+    <script src="~/Scripts/facturas/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>    
+}
+

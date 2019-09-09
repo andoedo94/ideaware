@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Crear empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear empleado</h2>
+
+<div ng-app="api.empleados">
+    <div ng-controller="crear as empleadovm">
+        @if (ViewBag.id != null)
+        {
+            <input type="hidden" ng-model="empleadovm.id" ng-init="id='@ViewBag.id'" />
+        }
+        <form name="empleadovm.empleadoform" ng-submit="empleadovm.guardar()" novalidate>
+            <div class="col-md-12" ng-show="empleadovm.errores != null">
+                <div class="alert alert-danger">
+                    <span ng-repeat="error in empleadovm.errores">{{error.ErrorMessage}}</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Nombres</label>
+                    <input type="text" class="form-control" name="nombre" ng-model="empleadovm.empleado.nombre" placeholder="Nombre" ng-required="true" />
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.nombre.$touched) && empleadovm.empleadoform.nombre.$error.required">El nombre es requerido.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Apellidos</label>
+                    <input type="text" class="form-control" name="apellido" ng-model="empleadovm.empleado.apellido" placeholder="Apellido" ng-required="true" />
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.apellido.$touched) && empleadovm.empleadoform.apellido.$error.required">El apellido es requerido.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Username</label>
+                    <input type="email" class="form-control" name="username" ng-model="empleadovm.empleado.username" placeholder="Username" ng-required="true" />
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.username.$touched) && empleadovm.empleadoform.username.$error.required">El username es requerido.</span>
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.username.$touched) && empleadovm.empleadoform.username.$error.email">El username debe ser un email valido.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12" ng-if="!empleadovm.editar">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Contraseña</label>
+                    <input type="password" max="6" class="form-control" name="password" ng-model="empleadovm.empleado.password" placeholder="Contraseña" ng-required="true" />
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.password.$touched) && empleadovm.empleadoform.password.$error.required">La contraseña es requerida.</span>
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.password.$touched) && empleadovm.empleadoform.password.$error.max">La contraseña debe tener maximo 6 caracteres.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12" ng-if="!empleadovm.editar">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Confirmar Contraseña</label>
+                    <input type="password" max="6" class="form-control" name="passwordconfirmation" ng-model="empleadovm.empleado.confirmarpassword" placeholder="Confirmar Contraseña" ng-required="true" />
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.passwordconfirmation.$touched) && empleadovm.empleadoform.passwordconfirmation.$error.required">El campo confirmar contraseña es requerido.</span>
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.password.$touched) && empleadovm.empleadoform.password.$error.max">La contraseña debe tener maximo 6 caracteres.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="inputNombre"><span class="asterisk">*</span>Roles</label>
+                    <ui-select multiple id="variable" name="roles" ng-model="empleadovm.empleado.roles" ng-required="true">
+                        <ui-select-match placeholder="Seleccione variables (multiple)">{{$item.nombre}}</ui-select-match>
+                        <ui-select-choices repeat="item.id as item in empleadovm.roles | filter:$select.search">
+                            {{ item.nombre}}
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="text-danger" ng-show="(empleadovm.empleadoform.$submitted || empleadovm.empleadoform.roles.$touched) && empleadovm.empleadoform.roles.$error.required">El campo roles es requerido</span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-primary">Guardar</button>
+                <br />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/empleados/controller.js"></script>
+    <script src="~/Scripts/empleados/services.js"></script>
+    <script src="~/Scripts/dir-pagination.js"></script>
+    <script src="~/Scripts/select.min.js"></script>
+}
+
